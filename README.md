@@ -8,3 +8,16 @@ This project serves as my Bachelor's thesis 2023.
 
 - [@tielebodyn](https://www.github.com/tielebodyn)
 
+## Features
+
+- custom user groups
+- map for watching available deals in your area
+- marketplace with custom currency
+- overview of users and transactions
+- admin backend for managing your group
+- ...
+## Tech Stack
+ 
+- laravel 10
+- TailwindCSS
+
