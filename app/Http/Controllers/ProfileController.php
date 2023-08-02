@@ -31,10 +31,26 @@ class ProfileController extends Controller
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
+        if ($request->file('profile_image')) {
+            $image = $request->file('profile_image');
+            $imageName = 'profileImage' . '.' . $image->extension();
+            $relativePath = 'storage/images/users/' . $request->user()->id;
+            $absolutePath = public_path('storage/images/users/' . $request->user()->id);
+            $image->move($absolutePath, $imageName);
+            $request->user()->profile_image = $relativePath . '/' . $imageName;
+        }
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // if description got updated
+        if ($request->statusName == 'personal-information') {
+            $status = 'personal-information-updated';
+        } elseif($request->statusName == 'profile-information') {
+            $status = 'profile-information-updated';
+        } else {
+            $status = null;
+        }
+        return Redirect::route('profile.edit')->with('status', $status);
     }
 
     /**
