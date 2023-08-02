@@ -1,10 +1,10 @@
-<button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar"
+@vite('resources/js/sidebar.js')
+<button id="sidebar-toggle"
   type="button"
-  class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-  <span class="sr-only">Open sidebar</span>
-  <img src={{ asset('storage/icons/menu.svg') }} alt="">
+  class="p-3 mt-2 ml-3 fixed bg-accent rounded-lg">
+  <x-svg icon="menu" size="24" fill="white" />
 </button>
-<aside id="default-sidebar"
+<aside id="sidebar"
   class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
   aria-label="Sidebar">
   <div class="h-full py-4 overflow-y-auto bg-white flex flex-col  justify-between border-r border-gray2">
