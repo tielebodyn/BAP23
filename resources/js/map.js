@@ -10,6 +10,7 @@ const map = new mapboxgl.Map({
 const markers = [];
 // Set marker options.
 const marker = new mapboxgl.Marker({
+// TODO: add ping to current location
 color: "#FFFFFF",
 draggable: false
 }).setLngLat([lng ?? 4.4478 , lat ?? 51.0950])
@@ -57,12 +58,13 @@ for (const feature of geojson.features) {
   markers.push(el);
 }
 map.on('zoom', () => {
-console.log(map.getZoom());
+// TODO: change marker size so it stays consistent
+// console.log(map.getZoom());
 
 });
 };
 
-
+// TODO: add popup to marker
 
 
 const getLocation = async () => {
