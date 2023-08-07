@@ -7,19 +7,18 @@
   aria-label="Sidebar">
   <div class="h-full py-4 bg-white flex flex-col justify-between border-r border-gray-200">
     <div>
-      <ul class="mt-10">
+      <ul class="my-10">
         <x-navigation.nav-item text="Home" icon="trash" route="start" />
         <x-navigation.nav-item text="Profiel" icon="user" route="profile.edit" />
       </ul>
-@include('layouts.partials.group-dropdown')
+      @include('layouts.partials.group-dropdown')
       @if (isset($group))
-        <ul>
+        <ul class="mt-6">
           <x-navigation.nav-item text="Dashboard" icon="stack" route="group.dashboard" :$group />
-          <x-navigation.nav-item text="Kaart" icon="location" route="map" />
-          <x-navigation.nav-item text="Aanbiedingen" icon="shopping-cart" route="offers" />
+          <x-navigation.nav-item text="Kaart" icon="location" route="group.map" :$group />
+          <x-navigation.nav-item text="Aanbiedingen" icon="shopping-cart" route="group.post" :$group />
           <x-navigation.nav-item text="Transacties" icon="bank" route="transactions" />
-          <x-navigation.nav-item text="Leden" icon="group" route="group.members" last={{ true }}
-            :$group />
+          <x-navigation.nav-item text="Leden" icon="group" route="group.members" last={{ true }} :$group />
         </ul>
       @endif
     </div>
