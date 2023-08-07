@@ -63,4 +63,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Group::class)->withPivot('role', 'status');;
     }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
