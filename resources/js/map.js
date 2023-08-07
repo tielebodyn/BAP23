@@ -1,76 +1,81 @@
-const loadMap = (lng, lat, zoom) => {
-mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-const map = new mapboxgl.Map({
-    container: "map", // container ID
-    // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-    style: "mapbox://styles/mapbox/streets-v12", // style URL
-    center: [lng ?? 4.4478, lat ?? 51.0950], // starting position [lng, lat]
-    zoom: zoom ?? 12, // starting zoom
-});
-const markers = [];
-// Set marker options.
-const marker = new mapboxgl.Marker({
-// TODO: add ping to current location
-color: "#FFFFFF",
-draggable: false
-}).setLngLat([lng ?? 4.4478 , lat ?? 51.0950])
-.addTo(map);
-markers.push(marker);
+import "mapbox-gl/dist/mapbox-gl.css";
+import mapboxgl from "mapbox-gl";
 
+const activePostWrapper = document.querySelector(".js-active-posts");
+const activePosts = activePostWrapper.querySelectorAll("li");
 
+const loadMap = (location) => {
+    const { lng, lat, zoom } = location;
+    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+    const map = new mapboxgl.Map({
+        container: "map", // container ID
+        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+        style: "mapbox://styles/mapbox/streets-v12", // style URL
+        center: [lng ?? 4.4478, lat ?? 51.095], // starting position [lng, lat]
+        zoom: zoom ?? 12, // starting zoom
+        maxZoom: 14,
+    });
+    const markers = [];
 
-const geojson = {
-  type: 'FeatureCollection',
-  features: [
-    {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [3.5643, 50.8138]
-      },
-      properties: {
-        title: 'Mapbox',
-        description: 'Washington, D.C.'
-      }
-    },
-    {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [-122.414, 37.776]
-      },
-      properties: {
-        title: 'Mapbox',
-        description: 'San Francisco, California'
-      }
+    const createMarker = ({
+        coordinates = null,
+        popupHtml = null,
+        markerMarkup = "",
+        location = false,
+    }) => {
+        const el = document.createElement("div");
+        el.innerHTML = markerMarkup;
+        // TODO: add popup to marker
+        let popup = new mapboxgl.Popup({ offset: 0 }).setHTML(popupHtml);
+        if(location) {
+            popup = null;
+        }
+        // make a marker for each feature and add to the map
+        new mapboxgl.Marker(el)
+            .setLngLat(coordinates)
+            .setPopup(popup) // sets a popup on this marker
+            .addTo(map);
+        !location && markers.push(el);
+    };
+    activePosts.forEach((post) => {
+    const long = post.getAttribute('data-long');
+    const lat = post.getAttribute('data-lat');
+     createMarker({
+        coordinates: [long, lat],
+        popupHtml: `${post.innerHTML}`,
+        markerMarkup:
+            '<div class="bg-violet-400 bg-opacity-25 w-11 h-11 rounded-full border-4 border-white js-map-marker"> </div>',
+    });
+
+    });
+
+    // create marker wit current location
+    if (location.success) {
+        createMarker({
+            coordinates: [lng, lat],
+            markerMarkup: `
+        <span class="relative flex h-6 w-6">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-6 w-6 bg-violet-500"></span>
+        </span>`,
+            location: true,
+        });
     }
-  ]
+    map.on("zoom", () => {
+        // TODO: change marker size so it stays consistent
+        markers.forEach((marker) => {
+            const markerElement = marker.querySelector(".js-map-marker");
+            markerElement.style.width = `${map.getZoom() * 5}px`;
+            markerElement.style.height = `${map.getZoom() * 5}px`;
+
+        });
+    });
 };
-
-// add markers to map
-for (const feature of geojson.features) {
-  // create a HTML element for each feature
-  const el = document.createElement('div');
-  el.className = 'bg-accent bg-opacity-25 w-20 h-20 rounded-full border-4 border-white';
-
-  // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
-  markers.push(el);
-}
-map.on('zoom', () => {
-// TODO: change marker size so it stays consistent
-// console.log(map.getZoom());
-
-});
-};
-
-// TODO: add popup to marker
-
 
 const getLocation = async () => {
-const options = {
-  enableHighAccuracy: true,
-};
+    const options = {
+        enableHighAccuracy: true,
+    };
     try {
         const position = await new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject, options);
@@ -98,12 +103,8 @@ const options = {
 (async () => {
     try {
         const location = await getLocation();
-        const {lng, lat, zoom} = location;
-        loadMap(lng, lat, zoom);
+        loadMap(location);
     } catch (error) {
         console.error(error);
     }
 })();
-
-
-
