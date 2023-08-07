@@ -22,6 +22,7 @@ class ProfileUpdateRequest extends FormRequest
             'profile_image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'profile_color' => ['string', 'max:255'],
             'description' => ['string', 'max:255'],
+            'tags' => ['array', 'max:8'],
         ];
     }
 }

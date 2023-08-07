@@ -1,9 +1,8 @@
-<section>
+<section class="js-personal-section">
   <header>
     <h2 class="text-lg font-medium text-gray-900">
       {{ __('Persoonlijke informatie') }}
     </h2>
-
   </header>
 
   <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
@@ -11,13 +10,42 @@
     @method('patch')
     <input type="hidden" name="statusName" value="personal-information">
     <div>
-      <textarea class="resize-none mb-4 w-full" name="description" id="txtid" rows="3" maxlength="200">{{ old('description', $user->description) }}</textarea>
+      {{-- FIXME: form not submitting when description is empty --}}
+      <x-forms.input-label for="name" :value="__('Beschrijving')" />
+      <input class="resize-none mb-4 block w-full" name="description" type="text" value="{{ old('description', $user->description) }}">
 
+      <div class="tags my-6">
+        {{-- current tags --}}
+          <x-forms.input-label for="name" :value="__('interesses')" class="mb-2" />
+        <div class="h-40 bg-gray-50  p-2 overflow-auto">
+          <ul class="js-selected-tags  flex flex-wrap  rounded">
+            @foreach ($user->tags as $tag)
+              <x-tag :tag="$tag" :close="true" :selected="true" />
+            @endforeach
+          </ul>
+        </div>
+        <div class="w-full relative js-searchbar-wrapper mt-2">
+          {{-- searchbar --}}
+              <x-forms.input-label for="name" :value="__('interesse toevoegen')" />
+          <input placeholder="voeg hier toe" class="mt-1 w-full js-tag-input p-2 rounded  cursor-pointer"
+            autocomplete="off" />
+          {{-- results --}}
+          <ul
+            class="border border-gray-200 bg-white z-10 absolute  w-full js-tag-list max-h-40 overflow-y-scroll hidden">
+            @foreach ($tags as $tag)
+              @if (!$user->tags->contains($tag))
+                <x-tag :tag="$tag" :close="true" />
+              @endif
+            @endforeach
+          </ul>
+        </div>
 
+        <x-forms.input-error class="mt-2" :messages="$errors->get('tags')" />
+      </div>
       <div class="flex items-center gap-4">
-        <x-buttons.primary-button>{{ __('Opslaan') }}</x-buttons.primary-button>
-
-
+        <x-buttons.secondary-button type="submit">{{ __('Opslaan') }}</x-buttons.secondary-button>
+        <a href="{{ route('profile.edit') }}" class="bg-red-500 p-2 rounded-lg"> <x-svg icon="close" size="24"
+            stroke="white" /> </a>
         @if (session('status') === 'personal-information-updated')
           <p id="'personal-information-updated" x-data="{ show: true }" x-show="show" x-transition
             x-init="setTimeout(() => show = false, 2000)" class="text-sm text-gray-600">{{ __('Saved.') }}</p>
@@ -25,3 +53,11 @@
       </div>
   </form>
 </section>
+@if ($errors->get('tags') || session('status') === 'personal-information-updated')
+  <script>
+    document.querySelector('.js-personal-section').scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+  </script>
+@endif
