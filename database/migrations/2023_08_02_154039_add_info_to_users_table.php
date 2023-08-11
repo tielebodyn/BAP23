@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('profile_image')->nullable();
             $table->string('profile_color')->nullable();
-            $table->role('role')->default('user');
+            $table->string('role')->default('user');
             $table->boolean('is_active')->default(false);
             $table->string('adress_street')->nullable();
             $table->string('adress_number')->nullable();
