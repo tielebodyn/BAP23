@@ -8,7 +8,7 @@
   <div class="h-full py-4 bg-white flex flex-col justify-between border-r border-gray-200">
     <div>
       <div class="mt-5 ">
-        <x-application-logo class="mb-10 ml-3" />
+        <x-app-logo class="mb-10 ml-3" />
         @include('layouts.partials.group-dropdown')
 
       </div>
