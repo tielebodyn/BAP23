@@ -44,8 +44,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware('group')->group(function () {
         Route::get('{group}/dashboard', [GroupDashboardController::class, 'index'])->name('group.dashboard');
         Route::get('{group}/leden', [GroupMembersController::class, 'index'])->name('group.members');
-        Route::get('{group}/ruilen', [GroupPostController::class, 'index'])->name('group.post');
+        Route::get('{group}/ruilen', [GroupPostController::class, 'index'])->name('group.post.index');
+        Route::post('{group}/ruilen', [GroupPostController::class, 'search'])->name('group.post.search');
         Route::get('{group}/ruilen/nieuw', [GroupPostController::class, 'create'])->name('group.post.create');
+        Route::post('{group}/ruilen/nieuw', [GroupPostController::class, 'store'])->name('group.post.store');
         Route::get('{group}/ruilen/{post}', [GroupPostController::class, 'show'])->name('group.post.show');
         Route::get('{group}/kaart', [GroupMapController::class, 'index'])->name('group.map');
         // map

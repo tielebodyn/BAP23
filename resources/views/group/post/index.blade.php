@@ -1,28 +1,57 @@
+@vite('resources/js/pages/post/index.js')
 <x-app-layout :$group>
+  <div class="w-full h-40 bg-white border-b border-gray-200 flex justify-center items-center space-x-24">
+    <form action="{{ route('group.post.search', $group) }}" method="post" class="m-0">
+      @csrf
+      @method('POST')
+      <div class="w-full flex items-center space-x-2">
+        <x-forms.search  name="search" icon="search" placeholder="Piano, Boeken, Brugge, 9000,..." />
+        <x-forms.dropdown name="straal">
+          <option hidden selected disabled>Afstand</option>
+          <option value="1">1 km</option>
+          <option value="2">2 km</option>
+          <option value="5">5 km</option>
+          <option value="10">10 km</option>
+          <option value="20">20 km</option>
+          <option value="40">40 km</option>
+          <option value="60">60 km</option>
+          <option value="80">80 km</option>
+          <option value="100">100 km</option>
+          <option value="250">250 km</option>
+        </x-forms.dropdown>
+        <x-forms.dropdown name="straal js-type-select">
+          <option value="vraag">Vraag</option>
+          <option value="aanbod" selected>Aanbod</option>
+        </x-forms.dropdown>
+        <x-buttons.primary-button class="ml-2">
+          Zoeken
+        </x-buttons.primary-button>
+      </div>
+    </form>
+
+    <a href="{{ route('group.post.create', $group) }}">
+      <x-buttons.secondary-button class="flex ">
+        <span> Ruil Maken</span>
+        @include('components.icons.plus', ['class' => 'stroke-gray-50 ml-5'])
+      </x-buttons.secondary-button>
+    </a>
+
+  </div>
+  @if (isset($searchQuery))
+    <div class="m-2">
+      <span class="text-sm text-gray-500">Zoekresultaten voor: <span
+          class="font-medium">{{ $searchQuery }}</span></span>
+      <a href="{{ route('group.post.index', $group) }}" class="ml-2 text-sm text-gray-500">wis zoekopdracht</a>
+    </div>
+  @endif
   <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-      <h1>This is the Trade page</h1>
-    <a href="{{ route('group.post.create', $group) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create new post</a>
       <ul>
         @foreach ($activePosts as $post)
-          <li class="bg-gray-200 mb-3 rounded">
-           <div class="flex">
-            <img src="{{ asset($post->user->profile_image) }}" alt="{{ $post->user->name }}" class="rounded-full mr-2"
-              width="40" height="40">
-            <p>{{ $post->user->name }}</p>
-            </div>
-            <p>{{ $post->title }}</p>
-            <p>{{ $post->description }}</p>
-            <ul class="flex">
-              @foreach ($post->categories as $category)
-                <li class="bg-blue-200 rounded m-2 w-fit">{{ $category->name }}</li>
-              @endforeach
-            </ul>
-            <p>{{ $post->price }} {{ $post->group->unit }} </p>
-          </li>
+          <x-post.item :post="$post" :group="$group" />
         @endforeach
       </ul>
-
     </div>
   </div>
+
 </x-app-layout>
