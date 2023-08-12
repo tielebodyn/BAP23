@@ -6,6 +6,7 @@
   </div>
   <div class="p-x4 sm:px-8">
     <label for="files">Afbeelding Kiezen</label>
-    <input name="profile_image"
+    {{-- <input name="profile_image"
       class="mt-1 file:cursor-pointer file:p-2 file:text-white file:bg-violet-400 file:border-none file:rounded-lg block text-sm text-black rounded-lg cursor-pointer bg-gray-200 focus:outline-none"
-      aria-describedby="file_input_help" id="file_input" accept=".jpeg, .png, .jpg, .gif, .svg" type="file">
+      aria-describedby="file_input_help" id="file_input" accept=".jpeg, .png, .jpg, .gif, .svg" type="file"> --}}
+<x-forms.input-image name="profile_image" default="{{$user->profile_image}}"/>
