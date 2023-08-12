@@ -16,7 +16,7 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans text-slate-800 antialiased">
+<body class="font-sans text-slate-800 bg-gray-50 antialiased">
   <div class="w-full flex justify-between fixed bg-gray-50 h-20 px-2 md:px-12 items-center">
     <x-app-logo />
     <div class=" items-center ">
