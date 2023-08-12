@@ -33,7 +33,7 @@
         <div class="max-w-xl  p-4 sm:p-4 ">
           <div class="w-full js-image-select hidden">
             <x-header title="Afbeeldingen" description="Hier voeg je afbeeldingen toe van je aanbod. max(4) " />
-            <x-forms.input-image name="images[]" count="2" />
+            <x-forms.input-image name="images[]" count="4" />
             <x-forms.input-error class="mt-2" :messages="$errors->get('images')" />
           </div>
         </div>
