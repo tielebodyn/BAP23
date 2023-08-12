@@ -38,6 +38,7 @@ class GroupController extends Controller
             $absolutePath = public_path('storage/images/groups/' . $group->id);
             $image->move($absolutePath, $imageName);
             $groupData['logo'] = $relativePath . '/' . $imageName;
+            $group->update($groupData);
         }
         // redirect to group page
         Session::put('currentGroup', $group->id);

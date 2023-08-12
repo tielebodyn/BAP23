@@ -12,11 +12,11 @@
     <div>
       {{-- FIXME: form not submitting when description is empty --}}
       <x-forms.input-label for="name" :value="__('Beschrijving')" />
-      <input class="resize-none mb-4 block w-full" name="description" type="text" value="{{ old('description', $user->description) }}">
+      <x-forms.text-area rows="6" name="description">{{ old('description', $user->description) }}</x-forms.text-area>
 
       <div class="tags my-6">
         {{-- current tags --}}
-          <x-forms.input-label for="name" :value="__('interesses')" class="mb-2" />
+        <x-forms.input-label for="name" :value="__('interesses')" class="mb-2" />
         <div class="h-40 bg-gray-50  p-2 overflow-auto">
           <ul class="js-selected-tags  flex flex-wrap  rounded">
             @foreach ($user->tags as $tag)
@@ -26,9 +26,9 @@
         </div>
         <div class="w-full relative js-searchbar-wrapper mt-2">
           {{-- searchbar --}}
-              <x-forms.input-label for="name" :value="__('interesse toevoegen')" />
-          <input placeholder="voeg hier toe" class="mt-1 w-full js-tag-input p-2 rounded  cursor-pointer"
-            autocomplete="off" />
+          <x-forms.input-label for="name" :value="__('interesse toevoegen')" />
+
+            <x-forms.text-input  class="w-1/2 js-tag-input"  placeholder="voeg hier toe"   />
           {{-- results --}}
           <ul
             class="border border-gray-200 bg-white z-10 absolute  w-full js-tag-list max-h-40 overflow-y-scroll hidden">
@@ -44,13 +44,15 @@
       </div>
       <div class="flex items-center gap-4">
         <x-buttons.secondary-button type="submit">{{ __('Opslaan') }}</x-buttons.secondary-button>
-        <a href="{{ route('profile.edit') }}" class="bg-red-500 p-2 rounded-lg"> <x-svg icon="close" size="24"
-            stroke="white" /> </a>
+        <a href="{{ route('profile.edit') }}" class="bg-red-500 p-2 rounded-lg">
+          @include('components.icons.close', ['class' => 'stroke-white'])
+        </a>
         @if (session('status') === 'personal-information-updated')
           <p id="'personal-information-updated" x-data="{ show: true }" x-show="show" x-transition
             x-init="setTimeout(() => show = false, 2000)" class="text-sm text-gray-600">{{ __('Saved.') }}</p>
         @endif
       </div>
+    </div>
   </form>
 </section>
 @if ($errors->get('tags') || session('status') === 'personal-information-updated')

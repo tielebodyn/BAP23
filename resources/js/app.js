@@ -1,7 +1,11 @@
+// create pathname that only takes the last part of the url after the last /
+const pathname = window.location.pathname.split("/").pop();
+console.log(pathname);
 import './bootstrap';
 
-import Alpine from 'alpinejs';
 
-window.Alpine = Alpine;
 
-Alpine.start();
+import.meta.glob([
+  '../images/**',
+
+]);
