@@ -3,15 +3,15 @@
         <button type="button"
           class="js-dropdown-button w-full self-baseline text-gray-600 flex bg-gray-200 py-3 px-2 justify-between relative z-10">
           @if (isset($newGroup))
-             nieuwe groep
+            nieuwe groep
           @elseif (!isset($group))
             <span class="pr-5"> selecteer groep </span>
-            <x-svg icon="caret-down" size="24" fill="" />
+            @include('components.icons.caret-down', ['class' => 'fill-gray-600 stroke-gray-600'])
           @else
-            <img class="w-6 rounded" src={{ asset('storage/group-logo.png') }}><img /><span class="pr-5">
+            <img class="w-6 rounded" src={{ asset($group->logo) }}><img /><span class="pr-5">
               {{ $group->name }}
             </span>
-            <x-svg icon="caret-down" size="24" fill="" />
+            @include('components.icons.caret-down', ['class' => 'fill-gray-600 stroke-gray-600'])
           @endif
         </button>
         <div class="js-dropdown-menu shadow-lg bg-gray-100 absolute w-full hidden">
@@ -23,7 +23,7 @@
                 <li>
                   <a href="{{ route('group.dashboard', $userGroup) }}"
                     class="self-baseline text-gray-600 flex py-3 px-2 justify-start space-x-3 relative z-10 border-b-2 mt-1 hover:bg-white"><img
-                      class="w-6 rounded" src={{ asset('storage/group-logo.png') }}><img /><span class="pr-5">
+                      class="w-6 rounded" src={{ asset($userGroup->logo) }}><img /><span class="pr-5">
                       {{ $userGroup->name }}
                     </span>
                   </a>
@@ -32,10 +32,10 @@
             </ul>
           </div>
           <a href="{{ route('group.create') }}"
-            class="self-baseline  text-gray-600 flex py-3 w-full  justify-between relative z-10 py-3 px-2">
+            class="self-baseline  text-gray-600 flex py-3 w-full  justify-between relative z-10 py-3 px-2 hover:bg-white">
             nieuwe groep
             </span>
-            <x-svg icon="plus" size="24" fill="" />
+            @include('components.icons.plus', ['class' => 'stroke-gray-600'])
           </a>
         </div>
       </div>
