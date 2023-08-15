@@ -1,19 +1,28 @@
-import search from "../../components/search";
+import createMap from "../../components/mapbox/createMap";
+import createMarker from "../../components/mapbox/createMarker";
 
-const inputElement = document.querySelector(".js-tag-input");
-const tagListElement = document.querySelector(".js-tag-list");
+// js-show-location
+const mapContainer = document.querySelector(".js-group-location");
+// select data-long
+const zoom = 12;
+const lng = parseFloat(mapContainer.dataset.long);
+const lat = parseFloat(mapContainer.dataset.lat);
 
-const searchBarWrapper = document.querySelector(".js-searchbar-wrapper");
-
-const initProfileTags = () => {
-    inputElement.addEventListener("input", () => {
-        search(inputElement, tagListElement, { showOnEmpty: true });
-    });
-
-};
-document.addEventListener("click", (e) => {
-    if (!searchBarWrapper.contains(e.target)) {
-        searchBarWrapper.querySelector(".js-tag-list").classList.add("hidden");
-    }
+// create map
+const map = createMap({
+    mapElement: mapContainer,
+    coordinates: [lng, lat],
+    zoom: zoom,
+    maxZoom: 12,
+    minZoom: 12,
 });
-initProfileTags();
+map.dragPan.disable();
+
+const marker = createMarker({
+    markup: `<span class="relative flex h-4 w-4">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-4 w-4 bg-violet-500"></span>
+        </span>`,
+    coordinates: [lng, lat],
+});
+marker.setLngLat([lng, lat]).addTo(map);
