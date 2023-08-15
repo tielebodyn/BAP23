@@ -11,6 +11,8 @@ class MembersController extends Controller
     // index
     public function index(Group $group)
     {
+        // get all group members
+        $members = $group->users()->get();
         return view('group.members', compact('group'));
     }
 }

@@ -15,7 +15,9 @@ class HomeController extends Controller
         if (Session::get('currentGroup')) {
             $group = Group::find(Session::get('currentGroup'));
         };
-        $groups = auth()->user()->groups;
-        return view('home', compact('groups', 'group'));
+        // overview all groups where group user status is awaiting
+        $invitedGroups = auth()->user()->groups->where('pivot.status', 'invited');
+        $groups = auth()->user()->groups->where('pivot.status', 'accepted');
+        return view('home', compact('groups', 'group', 'invitedGroups'));
     }
 }

@@ -21,6 +21,9 @@ class Group extends Model
         'unit',
         'color',
         'slug',
+        'long',
+        'lat',
+        'place',
     ];
 
     public function users()

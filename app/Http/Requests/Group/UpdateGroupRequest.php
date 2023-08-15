@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Group;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateGroupRequest extends FormRequest
+class UpdateGroupRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -13,8 +13,8 @@ class CreateGroupRequest extends FormRequest
      */
     public function rules(): array
     {
-          return [
-            'name' => ['string', 'max:255', 'unique:groups'],
+        return [
+            'name' => ['required', 'string', 'max:255'],
             'description' => ['string'],
             'logo' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'unit' => ['string', 'max:255'],

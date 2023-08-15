@@ -20,7 +20,7 @@ class ValidateGroupMembership
         $group = $request->route('group');
         $user = $request->user();
         if (!$user->groups->contains($group)) {
-            abort(404);
+            abort(403);
         }
         // if group is is equal to current session
         if (Session::get('currentGroup') != $group->id) {
