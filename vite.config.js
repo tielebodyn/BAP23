@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/js/map.js',
                 'resources/js/pages/create-post.js',
                 'resources/js/pages/post/index.js',
+                'resources/js/pages/group/create.js',
             ],
             refresh: true,
         }),

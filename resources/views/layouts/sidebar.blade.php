@@ -8,7 +8,9 @@
   <div class="h-full py-4 bg-white flex flex-col justify-between border-r border-gray-200">
     <div>
       <div class="mt-5 ">
-        <x-app-logo class="mb-10 ml-3" />
+        <div class="m-5">
+          <x-app-logo class="" />
+        </div>
         @include('layouts.partials.group-dropdown')
 
       </div>
@@ -17,7 +19,7 @@
         <x-navigation.nav-item text="Home" icon="trash" route="start" />
         <x-navigation.nav-item text="Profiel" icon="user" route="profile.edit" />
         @if (isset($group))
-          <div class="font-light text-sm mt-6  ml-4 "> {{$group->name}} </div>
+          <div class="font-light text-sm mt-6  ml-4 "> {{ $group->name }} </div>
           <x-navigation.nav-item text="Dashboard" icon="stack" route="group.dashboard" :$group />
           <x-navigation.nav-item text="Kaart" icon="location" route="group.map" :$group />
           <x-navigation.nav-item text="Aanbiedingen" icon="shopping-cart" route="group.post.index" :$group />

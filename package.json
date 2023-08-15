@@ -18,6 +18,7 @@
     "dependencies": {
         "@mapbox/mapbox-gl-geocoder": "^5.0.1",
         "dropzone": "^6.0.0-beta.2",
+        "froala-editor": "^4.1.0",
         "mapbox-gl": "^2.15.0"
     }
 }

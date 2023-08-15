@@ -37,7 +37,7 @@
 
         </div>
       </div>
-      <img src="{{ asset('storage/icons/trade.svg') }}" class="mx-2 w-8 ">
+
       <div class="w-6/12 h-full bg-gray-50 rounded grid  grid-cols-2 grid-rows-2  gap-1 ">
         <div
           class="rounded h-full border-4 text-violet-500 border-violet-500  border-opacity-20  items-center  flex flex-col  w-full cursor-pointer">
