@@ -1,4 +1,4 @@
-@vite('resources/js/map.js')
+@vite('resources/js/pages/group/map.js')
 <x-app-layout :$group>
 
   <title>Display a map on a webpage</title>
