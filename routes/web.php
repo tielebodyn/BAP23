@@ -26,7 +26,7 @@ Route::get('/', function () { return view('welcome'); })->name('home');
 
 
 Route::get('/startpagina', function () {
-    return view('home');
+    return view('my-groups');
 })->middleware(['auth', 'verified'])->name('start');
 
     Route::get('/groep/maken', [GroupController::class, 'index'])->name('group.create');

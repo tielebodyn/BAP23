@@ -19,7 +19,7 @@
             autocomplete="off" />
           <div class="dropdown relative max-h-32 overflow-y-scroll no-scrollbar">
             <ul class="shadow-inner js-group-list">
-              @foreach (auth()->user()->groups as $userGroup)
+              @foreach (auth()->user()->groups->where('pivot.status', 'accepted') as $userGroup)
                 <li>
                   <a href="{{ route('group.dashboard', $userGroup) }}"
                     class="self-baseline text-gray-600 flex py-3 px-2 justify-start space-x-3 relative z-10 border-b-2 mt-1 hover:bg-white"><img

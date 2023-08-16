@@ -50,8 +50,8 @@ class GroupController extends Controller
     {
         // update group user status to accepted
         $group->users()->updateExistingPivot($request->user()->id, ['status' => 'accepted']);
-        // back to same page with group
-        return redirect()->back();
+        // redirect group dashboard
+        return redirect()->route('group.dashboard', $group);
     }
     // decline
     public function decline(Group $group, Request $request)
@@ -59,6 +59,8 @@ class GroupController extends Controller
         // update group user status to declined
         $group->users()->updateExistingPivot($request->user()->id, ['status' => 'declined']);
         // redirect to home page
+        // remove group from session
+        Session::forget('currentGroup');
         return redirect()->back();
     }
 

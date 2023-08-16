@@ -15,19 +15,22 @@
 
       </div>
       <ul class="mt-10">
-        <div class="font-light text-sm mt-6 ml-4 "> Persoonlijk </div>
-        <x-navigation.nav-item text="Home" icon="trash" route="start" />
-        <x-navigation.nav-item text="Profiel" icon="user" route="profile.edit" />
         @if (isset($group))
-          <div class="font-light text-sm mt-6  ml-4 "> {{ $group->name }} </div>
           <x-navigation.nav-item text="Dashboard" icon="stack" route="group.dashboard" :$group />
           <x-navigation.nav-item text="Kaart" icon="location" route="group.map" :$group />
-          <x-navigation.nav-item text="Aanbiedingen" icon="shopping-cart" route="group.post.index" :$group />
+          <x-navigation.nav-item text="Ruilen" icon="shopping-cart" route="group.post.index" :$group />
           <x-navigation.nav-item text="Transacties" icon="bank" route="transactions" />
           <x-navigation.nav-item text="Leden" icon="group" route="group.members" last={{ true }} :$group />
         @endif
       </ul>
     </div>
-    <x-buttons.logout />
+    <div>
+      <ul>
+        <x-navigation.nav-item text="Mijn Groepen" icon="lightning" route="start" :$group />
+        <x-navigation.nav-item text="Profiel" icon="{{ auth()->user()->profile_image }}" route="profile.edit"
+          image={{ true }} last={{ true }} />
+      </ul>
+      <x-buttons.logout />
+    </div>
   </div>
 </aside>

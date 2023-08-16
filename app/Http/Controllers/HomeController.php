@@ -18,6 +18,6 @@ class HomeController extends Controller
         // overview all groups where group user status is awaiting
         $invitedGroups = auth()->user()->groups->where('pivot.status', 'invited');
         $groups = auth()->user()->groups->where('pivot.status', 'accepted');
-        return view('home', compact('groups', 'group', 'invitedGroups'));
+        return view('my-groups', compact('groups', 'group', 'invitedGroups'));
     }
 }
