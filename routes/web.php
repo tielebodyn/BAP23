@@ -29,7 +29,6 @@ Route::get('/startpagina', function () {
     return view('my-groups');
 })->middleware(['auth', 'verified'])->name('start');
 
-    Route::get('/groep/maken', [GroupController::class, 'index'])->name('group.create');
 Route::middleware('auth')->group(function () {
     Route::get('/profiel', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profiel', [ProfileController::class, 'update'])->name('profile.update');
@@ -37,27 +36,31 @@ Route::middleware('auth')->group(function () {
     Route::get('/transacties', function () { return view('welcome'); })->name('transactions');
     Route::post('/groep/maken', [GroupController::class, 'store'])->name('group.store');
     Route::get('/startpagina', [HomeController::class, 'index'])->name('start');
-    // dropzone create group image
-    Route::post('/dropzone/store', [DropzoneController::class, 'storeGroupImage'])->name('dropzone.store.group');
-    // groep maken
+
     // group routes
     Route::middleware('group')->group(function () {
-        Route::get('{group}/dashboard', [GroupDashboardController::class, 'index'])->name('group.dashboard');
 
+        // group
+        Route::get('{group}/dashboard', [GroupDashboardController::class, 'index'])->name('group.dashboard');
+        Route::get('/groep/maken', [GroupController::class, 'index'])->name('group.create');
         Route::post('{group}/edit', [GroupController::class, 'update'])->name('group.update');
         Route::get('{group}/edit', [GroupController::class, 'edit'])->name('group.edit');
-        // accept
         Route::put('{group}/accept', [GroupController::class, 'accept'])->name('group.accept');
-        // decline
         Route::put('{group}/decline', [GroupController::class, 'decline'])->name('group.decline');
+
+        // members
         Route::get('{group}/leden', [GroupMembersController::class, 'index'])->name('group.members');
+        Route::post('{group}/leden/uitnodigen', [GroupMembersController::class, 'invite'])->name('group.members.invite');
+
+        // trade
         Route::get('{group}/ruilen', [GroupPostController::class, 'index'])->name('group.post.index');
         Route::post('{group}/ruilen', [GroupPostController::class, 'search'])->name('group.post.search');
         Route::get('{group}/ruilen/nieuw', [GroupPostController::class, 'create'])->name('group.post.create');
         Route::post('{group}/ruilen/nieuw', [GroupPostController::class, 'store'])->name('group.post.store');
         Route::get('{group}/ruilen/{post}', [GroupPostController::class, 'show'])->name('group.post.show');
-        Route::get('{group}/kaart', [GroupMapController::class, 'index'])->name('group.map');
+
         // map
+        Route::get('{group}/kaart', [GroupMapController::class, 'index'])->name('group.map');
 
     });
 
