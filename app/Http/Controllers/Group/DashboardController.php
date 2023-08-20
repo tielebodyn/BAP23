@@ -14,10 +14,6 @@ class DashboardController extends Controller
     public function index(Group $group)
     {
         // check if user is admin (in group_user pivot table)
-        //Get all users not in the group
-        $users = User::whereDoesntHave('groups', function ($query) use ($group) {
-            $query->where('group_id', $group->id);
-        })->get();
         $groupOwner = $group->users->where('pivot.role', 'admin')->first();
         $user = auth()->user();
         $isAdmin = $group->users()
@@ -27,6 +23,6 @@ class DashboardController extends Controller
 
 
 
-        return view('group.dashboard', compact('group', 'isAdmin', 'users', 'groupOwner'));
+        return view('group.dashboard', compact('group', 'isAdmin', 'groupOwner'));
     }
 }

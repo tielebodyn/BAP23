@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 class HomeController extends Controller
 {
     // index
-    public function index()
+    public function index(Group $group)
     {
         $group = null;
         if (Session::get('currentGroup')) {

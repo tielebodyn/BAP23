@@ -8,6 +8,7 @@ use App\Models\Group;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class GroupController extends Controller
 {
@@ -29,6 +30,11 @@ class GroupController extends Controller
         $groupData = $request->validated();
         $groupData['slug'] = $groupData['name'];
         $group = Group::create($groupData);
+
+        // create unique invitation code 32 characters long and check if its unique
+        $invitationToken = Str::random(32);
+        $group->invitation_token = $invitationToken;
+
         // make user admin
         $group->users()->attach($request->user()->id, ['role' => 'admin']);
         $group->users()->updateExistingPivot($request->user()->id, ['status' => 'accepted']);
@@ -88,6 +94,28 @@ class GroupController extends Controller
             $group->update($groupData);
         }
         // redirect to group page
+        return redirect()->route('group.dashboard', $group);
+    }
+    // invite link
+    public function acceptInvitation(Request $request)
+    {
+        // get token from url /{token}
+        $token = $request->token;
+        // find group by token
+        $group = Group::where('invitation_token', $token)->firstOrFail();
+        // check if user is already in group
+        if ($group->users->contains($request->user()->id)) {
+            // redirect to group dashboard
+            return redirect()->route('group.dashboard', $group);
+        }
+        // add user to group
+        $group->users()->attach($request->user()->id, ['role' => 'member']);
+        $group->users()->updateExistingPivot($request->user()->id, ['status' => 'accepted']);
+
+        // add to session
+        Session::put('currentGroup', $group->id);
+
+        // redirect to group dashboard
         return redirect()->route('group.dashboard', $group);
     }
 }

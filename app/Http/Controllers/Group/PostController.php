@@ -24,7 +24,9 @@ class PostController extends Controller
 
     public function show(Group $group, Post $post)
     {
-        return view('group.post.show', compact('group', 'post'));
+        // comments
+        $comments = $post->comments->sortByDesc('created_at')->all();
+        return view('group.post.show', compact('group', 'post', 'comments'));
     }
 
     public function create(Group $group)
@@ -80,9 +82,10 @@ class PostController extends Controller
     public function search(Group $group, Request $request)
     {
         $searchQuery = $request->search;
+        $type = $request->type;
 
         // filter by search query
-        $activePosts = Post::where('title', 'LIKE', '%' . $searchQuery . '%')
+        $allActivePosts = Post::where('title', 'LIKE', '%' . $searchQuery . '%')
             ->orWhere('place', 'LIKE', '%' . $searchQuery . '%')
             ->orWhereHas('categories', function ($query) use ($searchQuery) {
                 $query->where('name', 'LIKE', '%' . $searchQuery . '%');
@@ -92,9 +95,79 @@ class PostController extends Controller
             })
             ->get();
 
-        //TODO: filter on distance with user location and $post->lat and $post->long
-        $distance = $request->search;
+        $activePosts = $allActivePosts->where('group_id', $group->id)->sortByDesc('created_at')->all();
+        // filter by type
+        if ($type !== 'all') {
+            $activePosts = $allActivePosts->where('type', $type)->where('group_id', $group->id)->sortByDesc('created_at')->all();
+        }
 
         return view('group.post.index', compact('group', 'activePosts', 'searchQuery'));
+    }
+    // edit
+    public function edit(Group $group, Post $post)
+    {
+
+        // check if user is owner of post
+        if (auth()->user()->id !== $post->user_id) {
+            abort(403);
+        }
+        $categories = Category::all();
+        return view('group.post.edit', compact('group', 'post', 'categories'));
+    }
+    // update
+    public function update(Group $group, Post $post, PostRequest $request)
+    {
+        // check if user is owner of post
+        if (auth()->user()->id !== $post->user_id) {
+            abort(403);
+        }
+        $validatedRequest = $request->validated();
+        $post->update(
+            [
+                'title' => $validatedRequest['title'],
+                'type' => $validatedRequest['type'],
+                'description' => $validatedRequest['description'],
+                'price' => $validatedRequest['price'],
+                'long' => $validatedRequest['long'],
+                'lat' => $validatedRequest['lat'],
+                'place' => $validatedRequest['place'],
+                'status' => $validatedRequest['status'],
+            ]
+        );
+
+        // save categories in category_post table
+        if (isset($validatedRequest['categories'])) {
+            $post->categories()->detach();
+            foreach ($validatedRequest['categories'] as $category) {
+                $post->categories()->attach($category);
+            }
+        }
+        // save images
+        if (isset($validatedRequest['images'])) {
+            foreach ($validatedRequest['images'] as $key => $image) {
+                $imageName = 'image_' . $key + 1 . '.' . $image->extension();
+                $relativePath = 'storage/images/groups/' . $group->id . '/posts/' . $post->id;
+                $absolutePath = public_path('storage/images/groups/' . $group->id . '/posts/' . $post->id);
+                $image->move($absolutePath, $imageName);
+                $post->images()->create(
+                    [
+                        'image_path' => $relativePath . '/' . $imageName,
+                        'post_id' => $post->id,
+                    ]
+                );
+            }
+        }
+        $post->save();
+        return redirect()->route('profile.show', $group);
+    }
+    // delete
+    public function destroy(Group $group, Post $post)
+    {
+        // check if user is owner of post
+        if (auth()->user()->id !== $post->user_id) {
+            abort(403);
+        }
+        $post->delete();
+        return redirect()->route('profile.show', $group);
     }
 }

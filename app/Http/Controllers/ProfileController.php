@@ -17,6 +17,31 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+    //show
+    public function show(Request $request): View
+    {
+        $status = $request->query('status');
+
+        $tags = Tag::all();
+
+        if (Session::get('currentGroup')) {
+            $group = Group::find(Session::get('currentGroup'));
+        };
+        // get all users posts in current group
+        if (Session::get('currentGroup')) {
+            if ($status) {
+                $posts = $request->user()->posts()->where('group_id', Session::get('currentGroup'))->where('status', $status)->get();
+            } else {
+                $posts = $request->user()->posts()->where('group_id', Session::get('currentGroup'))->get();
+            }
+        }
+        return view('profile.show', [
+            'user' => $request->user(),
+            'tags' => $tags,
+            'group' => $group ?? null,
+            'posts' => $posts ?? false,
+        ]);
+    }
     public function edit(Request $request): View
     {
         $tags = Tag::all();
@@ -27,6 +52,7 @@ class ProfileController extends Controller
             'user' => $request->user(),
             'tags' => $tags,
             'group' => $group ?? null,
+
         ]);
     }
 
