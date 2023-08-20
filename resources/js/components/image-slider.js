@@ -1,5 +1,7 @@
-// Select all slides
+// code snipped sourced from https://blog.logrocket.com/build-image-carousel-from-scratch-vanilla-javascript/
+// Author: David Herbert
 const sliders = document.querySelectorAll(".slider");
+
 sliders.forEach((slider) => {
     const slides = slider.querySelectorAll(".slide");
     // loop through slides and set each slides translateX property to index * 100%

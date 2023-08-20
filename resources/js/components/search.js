@@ -1,4 +1,4 @@
-// FIXME: object default value not working showOnEmpty
+
 const search = (input, target, { showOnEmpty = false }) => {
     if (!showOnEmpty && input.value.length == 0) {
         target.classList.add("hidden");
@@ -6,6 +6,7 @@ const search = (input, target, { showOnEmpty = false }) => {
         target.classList.remove("hidden");
     }
     const inputValue = input.value.toUpperCase();
+    console.log(inputValue);
     const listItems = target.querySelectorAll("li");
 
     listItems.forEach((item) => {

@@ -43,7 +43,6 @@ const loadMap = (location) => {
         marker.addTo(map);
     }
     map.on("zoom", () => {
-        // TODO: change marker size so it stays consistent
         markers.forEach((marker) => {
             const markerElement = marker.querySelector(".js-map-marker");
             markerElement.style.width = `${map.getZoom() * 5}px`;

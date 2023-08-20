@@ -1,8 +1,8 @@
 // imports
-import createMap from "../../components/mapbox/createMap";
-import createGeocoder from "../../components/mapbox/createGeocoder";
-import createEditor from "../../components/froala/createEditor";
-import createMarker from "../../components/mapbox/createMarker";
+import createMap from "./createMap";
+import createGeocoder from "./createGeocoder";
+import createEditor from "../froala/createEditor";
+import createMarker from "./createMarker";
 
 // Initialize editor.
 createEditor("#edit");
@@ -31,7 +31,7 @@ customMarker.innerHTML = markerMarkup;
 
 // Attach the Mapbox Geocoder control to the map
 const geocoder = createGeocoder(customMarker);
-geocoder.setTypes("place, locality, postcode, region, poi");
+geocoder.setTypes("place, locality, postcode, region, poi, address");
 map.addControl(geocoder);
 
 geocoder.on("result", function (e) {
