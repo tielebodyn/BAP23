@@ -23,6 +23,7 @@ class PostRequest extends FormRequest
             'lat' => ['required', 'string', 'max:255'],
             'place' => ['required', 'string', 'max:255'],
             'images' => ['array', 'max:4'],
+            'status' => ['string', 'max:255'],
         ];
     }
 }

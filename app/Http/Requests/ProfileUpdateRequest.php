@@ -21,7 +21,8 @@ class ProfileUpdateRequest extends FormRequest
             'username' => ['string', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'profile_image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'profile_color' => ['string', 'max:255'],
-            'description' => ['string', 'max:255'],
+            //descriptionis long text
+            'description' => ['string', 'max:1300'],
             'tags' => ['array', 'max:8'],
         ];
     }
