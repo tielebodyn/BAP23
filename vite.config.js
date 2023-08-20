@@ -13,9 +13,7 @@ export default defineConfig({
                 'resources/js/pages/group/dashboard.js',
                 'resources/js/pages/group/map.js',
                 'resources/js/pages/create-post.js',
-                'resources/js/pages/post/index.js',
                 'resources/js/pages/group/create.js',
-                'resources/js/pages/group/edit.js'
             ],
             refresh: true,
         }),
