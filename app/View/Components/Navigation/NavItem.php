@@ -14,7 +14,7 @@ class NavItem extends Component
     public function __construct(
         public string $text,
         public string $route,
-        public string $icon,
+        public string $icon = '',
         public bool $active = false,
         public bool $last = false,
     ){}
