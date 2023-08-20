@@ -20,15 +20,13 @@
       </div>
       <div class="p-4 sm:p-8 bg-white shadow rounded-lg mt-6">
         <x-header title="locatie:" description="dit locatie waar de groep is gebaseerd" class="mb-2" />
-        <div class="js-group-location w-1/2 h-80 !cursor-default" data-long="{{ $group->long }}"
+        <div class="js-group-location w-full lg:w-1/2 h-80 !cursor-default" data-long="{{ $group->long }}"
           data-lat="{{ $group->lat }}"></div>
       </div>
       <div class="p-4 sm:p-8 bg-white shadow rounded-b-lg mt-6">
         <x-header title="Oprichter:" />
         <div class="flex items-center  space-x-4  mt-2">
-
-          <img src="{{ asset($groupOwner->profile_image) }}" alt="{{ $groupOwner->name }}"
-            class="shadow bg-gray-50 rounded-full w-8 h-8">
+   <x-profile.image :user="$groupOwner" class="shadow bg-gray-50 rounded-full w-8 h-8" />
           <p>{{ $groupOwner->name }}</p>
         </div>
         <p>{{ $groupOwner->email }}</p>

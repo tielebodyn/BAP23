@@ -1,5 +1,5 @@
 <x-app-layout :$group>
-  @vite('resources/js/pages/group/edit.js')
+  @vite('resources/js/components/mapbox/edit-map.js')
   @vite('resources/js/components/upload-image.js')
   <div class="py-12">
     <form method="post" action="{{ route('group.update', $group) }}" enctype="multipart/form-data">
@@ -7,7 +7,9 @@
       @method('post')
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+
           <div class="max-w-xl">
+            <x-buttons.back href="{{ route('group.dashboard', $group) }}" class="pb-4" />
             <x-header title="Algemene informatie"
               description=" Vul hier de algemene informatie in van je groep. Deze informatie kan je later nog aanpassen." />
             <div class="max-w-xl space-y-6 p-4 sm:p-8">
@@ -59,7 +61,8 @@
         <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
           <x-header title="Locatie" description="Hier kan je de locatie van je groep selecteren" class="m-2" />
           <div class="max-w-xl  p-4 sm:p-4">
-            <div id="map" class="block w-full h-96" data-long="{{ $group->long }}" data-lat="{{ $group->lat }}"></div>
+            <div id="map" class="block w-full h-96" data-long="{{ $group->long }}"
+              data-lat="{{ $group->lat }}"></div>
             <input type="hidden" required name="long" class="js-long-input" value={{ $group->long }}>
             <input type="hidden" required name="lat" class="js-lat-input" value={{ $group->lat }}>
             <input type="hidden" required name="place" class="js-place-input" value={{ $group->place }}>

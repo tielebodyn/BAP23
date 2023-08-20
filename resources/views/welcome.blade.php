@@ -14,6 +14,7 @@
 
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <link rel="icon" href="{{ Vite::asset('resources/images/logo.png') }}" type="image/x-icon" />
 </head>
 
 <body class="font-sans text-slate-800 bg-gray-50 antialiased">
@@ -25,9 +26,9 @@
           {{ __('Inloggen') }}
           </x-primary-button>
       </a>
-      <a href="{{ route('login') }}">
+      <a href="{{ route('register') }}">
         <x-buttons.primary-button
-          class="ml-1 md:ml-4 bg-transparent border !text-slate-800 border-slate-800 hover:bg-slate-100  "
+          class="ml-1 md:ml-4 bg-transparent border !text-slate-800 border-slate-800 hover:!bg-slate-100  "
           type="button">
           {{ __('Registreren') }}
           </x-primary-button>
@@ -49,11 +50,11 @@
         </p>
       </div>
       <div class="space-y-20 md:space-y-40 mb-20">
-        <x-step-card image="{{ 'image.png' }}" title="Registreren"
+        <x-step-card image="{{ 'welcome-1.png' }}" title="Registreren"
           description="Welkom bij Ruiltocht! Ontdek een nieuwe wereld van lokaal ruilen en handelen. Of je nu onder vrienden wilt ruilen of binnen  " />
-        <x-step-card image="{{ 'image.png' }}" title="Groep maken"
+        <x-step-card image="{{ 'welcome-2.png' }}" title="Groep maken"
           description="Welkom bij Ruiltocht! Ontdek een nieuwe wereld van lokaal ruilen en handelen. Of je nu onder vrienden wilt ruilen of binnen  " />
-        <x-step-card image="{{ 'image.png' }}" title="Ruilen!"
+        <x-step-card image="{{ 'welcome-3.png' }}" title="Ruilen!"
           description="Welkom bij Ruiltocht! Ontdek een nieuwe wereld van lokaal ruilen en handelen. Of je nu onder vrienden wilt ruilen of binnen  " />
 
       </div>

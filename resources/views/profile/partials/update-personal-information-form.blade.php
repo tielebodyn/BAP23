@@ -1,16 +1,11 @@
 <section class="js-personal-section">
-  <header>
-    <h2 class="text-lg font-medium text-gray-900">
-      {{ __('Persoonlijke informatie') }}
-    </h2>
-  </header>
+<x-header title="Persoonlijke Informatie" />
 
   <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
     @csrf
     @method('patch')
     <input type="hidden" name="statusName" value="personal-information">
     <div>
-      {{-- FIXME: form not submitting when description is empty --}}
       <x-forms.input-label for="name" :value="__('Beschrijving')" />
       <x-forms.text-area rows="6" name="description">{{ old('description', $user->description) }}</x-forms.text-area>
 

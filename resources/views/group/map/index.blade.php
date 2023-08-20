@@ -1,4 +1,5 @@
 @vite('resources/js/pages/group/map.js')
+
 <x-app-layout :$group>
 
   <title>Display a map on a webpage</title>
@@ -31,7 +32,9 @@
       display: none
     }
   </style>
-  <div id="map" class="!absolute top-0 bottom-0 w-full"></div>
+
+  <div id="map" class=" top-0 bottom-0 w-full h-screen no-scrollbar"></div>
+
   <ul class="js-active-posts hidden">
     @foreach ($activePosts as $post)
       <li class="" data-long="{{ $post->long }}" data-lat="{{ $post->lat }}">

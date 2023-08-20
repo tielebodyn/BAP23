@@ -4,10 +4,9 @@
     @method('patch')
     <input type="hidden" name="statusName" value="profile-information">
     <div class=" bg-white shadow sm:rounded-lg">
-      <div>
-        @include('profile.partials.update-profile-customisation')
-      </div>
-      <div class="max-w-xl space-y-6 p-4 sm:p-8 ">
+        <x-buttons.back href="{{ route('profile.show', $group) }}" class="pt-4 pl-4 sm:pt-8 sm:pl-8"/>
+      <div class="max-w-xl space-y-6 p-4 sm:p-8">
+        <x-header title="Profiel informatie" description="Pas hier je profiel informatie aan" class="m-2" />
         <div>
           <x-forms.input-label for="name" :value="__('Naam')" />
           <x-forms.text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)"
@@ -20,6 +19,7 @@
           <x-forms.text-input id="username" name="username" type="text" class="mt-1 block w-full" :value="old('username', $user->username)"
             description autocomplete="username" />
           <x-forms.input-error class="mt-2" :messages="$errors->get('username')" />
+
         </div>
 
         <div>
@@ -44,7 +44,9 @@
             </div>
           @endif
         </div>
-
+        <div>
+          @include('profile.partials.update-profile-customisation')
+        </div>
         <div class="flex items-center gap-4">
           <x-buttons.secondary-button type="submit">{{ __('Opslaan') }}</x-buttons.secondary-button>
           <a href="{{ route('profile.edit') }}" class="bg-red-500 p-2 rounded-lg">

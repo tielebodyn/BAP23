@@ -1,21 +1,24 @@
 @props(['post', 'group', 'detail' => false])
-<div class="bg-white mb-3 rounded-md shadow">
+<div class="bg-white mb-3 rounded-md shadow m-2 md:m-0">
   <div class="flex items-center justify-between border-b gray-200 p-2">
-    <div class="flex items-center">
-      <img src="{{ asset($post->user->profile_image) }}" alt="{{ $post->user->name }}" class="rounded-full mr-2"
-        width="34" height="34">
-      <p>{{ $post->user->name }}</p>
-    </div>
+    <a href="{{ route('group.members.show', [$group, $post->user]) }}">
+      <div class="flex items-center">
+      <x-profile.image :user="$post->user" class="rounded-full mr-2 w-6 h-6 md:w-10 md:h-10" />
+        <p class="text-sm md:text-base">{{ $post->user->name }}</p>
+      </div>
+    </a>
 
-    <div>
+    <div class="text-sm md:text-base">
       {{ $post->created_at->locale('nl')->diffForHumans() }}
-
       @if ($post->type == 'aanbod')
         <span class="bg-green-500 text-white rounded px-2 py-1 text-xs font-bold mx-4">Aanbod</span>
       @endif
       @if ($post->type == 'vraag')
         <span class="bg-red-500 text-white rounded px-2 py-1 text-xs font-bold mx-4">Vraag</span>
       @endif
+        @if ($post->user_id === auth()->user()->id)
+            <a href="{{ route('group.post.edit', [$group, $post]) }}" class="text-blue-500 hover:text-blue-700">edit</a>
+        @endif
     </div>
   </div>
   <div class="p-5">
@@ -51,7 +54,7 @@
           @endif
         </div>
       </div>
-         @include('components.icons.trade', ['class' => 'fill-gray-200 m-2'])
+      @include('components.icons.trade', ['class' => 'fill-gray-200 m-2'])
       <div
         class="w-6/12 h-full bg-gray-50 rounded grid  grid-cols-2 grid-rows-2 lg:py-4 lg:px-10 md:py-2 lg:gap-y-5 xl:gap-x-10 gap-1">
 

@@ -13,5 +13,4 @@
       @include('components.icons.close', ['class' => 'w-4', 'stroke' => $stroke])
     </button>
   @endif
-
 </li>

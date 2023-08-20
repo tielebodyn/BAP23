@@ -3,8 +3,15 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6">
-        <x-header title="groepen" description="dit zijn de groepen waar je lid van bent of waar je bent uitgenodigd" class="mb-5"/>
-          <h1 class="text-lg font-semibold">mijn groepen</h1>
+          <x-header title="groepen" description="dit zijn de groepen waar je lid van bent of waar je bent uitgenodigd"
+            class="mb-5" />
+          <h1 class="text-lg font-semibold">mijn groepen ({{ count($groups) }})</h1>
+          @if (count($groups) == 0)
+            <div class="flex space-x-1">
+              <p>je bent nog geen lid van een groep, je kan hier </p>
+              <a href="{{ route('group.create') }}" class="btn btn-primary text-blue-500 hover:text-blue-700"> een groep maken</a>
+            </div>
+          @endif
           @foreach ($groups as $group)
             {{-- list of invited groups with accept and deny button --}}
             <a href="{{ route('group.dashboard', $group) }}">
@@ -18,7 +25,10 @@
           @endforeach
         </div>
         <div class="p-6">
-          <h1 class="text-lg font-semibold">uitgenodigde groepen</h1>
+          <h1 class="text-lg font-semibold">uitgenodigde groepen ({{ count($invitedGroups) }})</h1>
+          @if (count($invitedGroups) == 0)
+            <p>je bent niet uitgenodigd voor een groep</p>
+          @endif
           <ul>
             @foreach ($invitedGroups as $group)
               {{-- list of invited groups with accept and deny button --}}

@@ -1,8 +1,8 @@
-{{-- TODO: layout like item.blade.php --}}
-@props(['post', 'group'])
-<div class="bg-white mb-1 rounded w-96">
 
-  <div class="flex items-center justify-between border-b gray-200 p-2 ">
+@props(['post', 'group'])
+<div class="bg-white mb-1 rounded w-80 md:w-96">
+
+  <div class="flex items-center justify-between border-b gray-200 p-2">
     <div class="flex items-center">
 
       <p>{{ $post->user->name }}</p>
@@ -29,12 +29,16 @@
     <div class="flex  h-32 ">
       <div class="w-6/12 h-full">
         <!-- slider container -->
-        <div class="slider w-full h-full relative overflow-hidden rounded">
-          @foreach ($post->images as $image)
-            <img src="{{ asset($image->image_path) }}"
+        <div class="{{ $post->type == 'aanbod' ? 'slider' : '' }} slider w-full h-full relative overflow-hidden rounded">
+          @if ($post->type == 'aanbod')
+            <img src="{{ asset($post->images->first()->image_path) }}"
               class="slide absolute bg-gray-50 rounded h-full w-full object-contain">
-          @endforeach
-
+          @endif
+          @if ($post->type == 'vraag')
+            <div class="bg-gray-50 rounded h-full w-full p-5">
+                {{ $post->description }}
+            </div>
+            @endif
         </div>
       </div>
 
