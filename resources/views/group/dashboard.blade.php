@@ -10,8 +10,10 @@
       <div class="p-4 sm:p-8 bg-white shadow rounded-b-lg">
         <div class="w-full flex justify-between items-center">
           <h1 class="font-bold mt-2">{{ $group->name }}</h1>
-          <a href="{{ route('group.edit', $group) }}" class="btn btn-primary"><x-buttons.primary-button > aanpassen
-              </x-primary-button></a>
+          @if ($group->users()->where('user_id', auth()->user()->id)->first()->pivot->role == 'admin')
+            <a href="{{ route('group.edit', $group) }}" class="btn btn-primary"><x-buttons.primary-button> aanpassen
+                </x-primary-button></a>
+          @endif
         </div>
         <h2 class="text-lg"><span class="font-bold">eenheid:</span> {{ $group->unit }}</h2>
         <div class="bg-gray-50 shadow rounded-lg p-6 mt-5">
@@ -26,7 +28,7 @@
       <div class="p-4 sm:p-8 bg-white shadow rounded-b-lg mt-6">
         <x-header title="Oprichter:" />
         <div class="flex items-center  space-x-4  mt-2">
-   <x-profile.image :user="$groupOwner" class="shadow bg-gray-50 rounded-full w-8 h-8" />
+          <x-profile.image :user="$groupOwner" class="shadow bg-gray-50 rounded-full w-8 h-8" />
           <p>{{ $groupOwner->name }}</p>
         </div>
         <p>{{ $groupOwner->email }}</p>
