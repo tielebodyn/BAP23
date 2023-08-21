@@ -63,7 +63,7 @@ class GroupController extends Controller
     public function decline(Group $group, Request $request)
     {
         // update group user status to declined
-        $group->users()->updateExistingPivot($request->user()->id, ['status' => 'declined']);
+        $group->users()->updateExistingPivot($request->user()->id, ['status' => 'denied']);
         // redirect to home page
         // remove group from session
         Session::forget('currentGroup');
