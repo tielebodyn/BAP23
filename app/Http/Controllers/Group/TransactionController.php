@@ -17,7 +17,8 @@ class TransactionController extends Controller
         // get all transactions
         // return view group transaction index
         // get all transactions from group
-        $transactions = $group->transactions()->get();
+        // order newest
+        $transactions = $group->transactions()->orderBy('created_at', 'desc')->get();
         // get post from transaction
 
         return view('group.transaction.index', compact('group', 'transactions'));
