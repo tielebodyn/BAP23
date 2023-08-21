@@ -20,7 +20,7 @@
         @if (isset($group))
           <x-navigation.nav-item text="Dashboard" icon="stack" route="group.dashboard" :$group />
           <x-navigation.nav-item text="Kaart" icon="location" route="group.map" :$group />
-          <x-navigation.nav-item text="Ruilen" icon="shopping-cart" route="group.post.index" :$group />
+          <x-navigation.nav-item text="Ruilen" icon="exchange" route="group.post.index" :$group />
           <x-navigation.nav-item text="Transacties" icon="bank" route="group.transactions" :$group />
           <x-navigation.nav-item text="Leden" icon="group" route="group.members" last={{ true }} :$group />
         @endif
