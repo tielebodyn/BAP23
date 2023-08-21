@@ -49,9 +49,9 @@
           </div>
         </div>
       @else
-        <ul>
+        <ul class="space-y-4">
           @foreach ($activePosts as $post)
-            <x-post.item :post="$post" :group="$group" />
+            <x-post.item :post="$post" :group="$group"/>
           @endforeach
         </ul>
       @endif
