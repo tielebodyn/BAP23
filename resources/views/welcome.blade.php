@@ -45,17 +45,17 @@
         <p class="">
           Welkom bij RuilVlot! Ontdek een nieuwe wereld van lokaal ruilen en handelen. Of je nu onder vrienden wilt
           ruilen
-          of binnen je eigen organisatie, bij Ruiltocht maken we het makkelijk om waardevolle connecties te leggen en te
+          of binnen je eigen organisatie, bij RuilVlot! maken we het makkelijk om waardevolle connecties te leggen en te
           delen wat je hebt.
         </p>
       </div>
       <div class="space-y-20 md:space-y-40 mb-20">
         <x-step-card image="{{ 'welcome-1.png' }}" title="Registreren"
-          description="Welkom bij Ruiltocht! Ontdek een nieuwe wereld van lokaal ruilen en handelen. Of je nu onder vrienden wilt ruilen of binnen  " />
+          description="Makkelijk en snel registeren" />
         <x-step-card image="{{ 'welcome-2.png' }}" title="Groep maken"
-          description="Welkom bij Ruiltocht! Ontdek een nieuwe wereld van lokaal ruilen en handelen. Of je nu onder vrienden wilt ruilen of binnen  " />
+          description="Eens ingelogd kan je een nieuwe groep aanmaken of je aansluiten bij een bestaande groep" />
         <x-step-card image="{{ 'welcome-3.png' }}" title="Ruilen!"
-          description="Welkom bij Ruiltocht! Ontdek een nieuwe wereld van lokaal ruilen en handelen. Of je nu onder vrienden wilt ruilen of binnen  " />
+          description="Je kan snel een vraag / aanbod aanmaken. Op de kaart kan je kijken welke er zich in de buurt bevinden!" />
 
       </div>
     </div>
