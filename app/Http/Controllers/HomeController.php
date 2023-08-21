@@ -16,7 +16,7 @@ class HomeController extends Controller
             $group = Group::find(Session::get('currentGroup'));
         };
         // overview all groups where group user status is awaiting
-        $invitedGroups = auth()->user()->groups->where('pivot.status', 'invited');
+        $invitedGroups = auth()->user()->groups->where('pivot.status', 'awaiting');
         $groups = auth()->user()->groups->where('pivot.status', 'accepted');
         return view('my-groups', compact('groups', 'group', 'invitedGroups'));
     }

@@ -28,7 +28,7 @@
     </div>
     <div>
       <ul>
-        <x-navigation.nav-item text="Mijn Groepen" icon="lightning" route="group.start" :$group notification="{{auth()->user()->groups->where('pivot.status', 'invited')->count()}}"/>
+        <x-navigation.nav-item text="Mijn Groepen" icon="lightning" route="group.start" :$group notification="{{auth()->user()->groups->where('pivot.status', 'awaiting')->count()}}"/>
         <x-navigation.nav-item text="Profiel" route="profile.show" :$group
           image={{ true }} last={{ true }} />
       </ul>
